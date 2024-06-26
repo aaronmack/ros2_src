@@ -55,6 +55,7 @@ def generate_launch_description():
     # )
 
     # https://gazebosim.org/docs/harmonic/ros2_integration
+    # https://github.com/gazebosim/ros_gz/blob/ros2/ros_gz_bridge/README.md
     gz_topic = '/model/my_car'
     joint_state_gz_topic = '/world/car_demo' + gz_topic + '/joint_state'
     link_pose_gz_topic = gz_topic + '/pose'
@@ -72,6 +73,9 @@ def generate_launch_description():
             # Velocity and odometry (Gazebo -> ROS2)
             gz_topic + '/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
             gz_topic + '/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
+            # Sensor Lidar (Gazebo -> ROS2)
+            'lidar@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
+            '/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked'
         ],
         remappings=[
             (joint_state_gz_topic, 'joint_states'),

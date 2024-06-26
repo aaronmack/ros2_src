@@ -220,6 +220,7 @@
       <plugin
         filename="ignition-gazebo-joint-state-publisher-system"
         name="ignition::gazebo::systems::JointStatePublisher">
+        <!-- <joint_name>my_car/camera</joint_name> -->
       </plugin>
 
       <plugin
@@ -237,6 +238,12 @@
         name="ignition::gazebo::systems::OdometryPublisher">
         <odom_frame>my_car/odom</odom_frame>
         <robot_base_frame>my_car</robot_base_frame>
+      </plugin>
+
+      <plugin
+          filename="gz-sim-sensors-system"
+          name="gz::sim::systems::Sensors">
+          <render_engine>ogre2</render_engine>
       </plugin>
 
     </model>

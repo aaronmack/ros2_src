@@ -196,6 +196,7 @@
     <child link="camera"/>
     <origin xyz="0.08 0.0 0.052500000000000005"/>
   </joint>
+  <!-- https://github.com/gazebosim/gazebo-classic/issues/2732 -->
   <gazebo reference="camera2base_link">
     <disableFixedJointLumping>true</disableFixedJointLumping>
     <preserveFixedJoint>true</preserveFixedJoint>
@@ -284,11 +285,36 @@
       <!-- <topic>cmd_vel</topic> -->
       <!-- <odom_topic>odom</odom_topic> -->
       <!-- <tf_topic>tf</tf_topic> -->
-      <!-- <frame_id>base_footprint</frame_id> -->
-      <!-- <child_frame_id>odom</child_frame_id> -->
+      <!-- <frame_id>my_car/odom</frame_id> -->
+      <!-- <child_frame_id>my_car/base_footprint</child_frame_id> -->
       <odom_publish_frequency>1</odom_publish_frequency>
       <max_torque>30</max_torque>
       <max_acceleration>1.8</max_acceleration>
     </plugin>
+  </gazebo>
+  <!-- 雷达 -->
+  <gazebo reference="laser">
+    <sensor name="gpu_lidar" type="gpu_lidar">
+      <pose relative_to="laser">0 0 0 0 0 0</pose>
+      <topic>lidar</topic>
+      <update_rate>5.5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3</min_angle>
+            <max_angle>3</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <always_on>1</always_on>
+      <visualize>true</visualize>
+    </sensor>
   </gazebo>
 </robot>

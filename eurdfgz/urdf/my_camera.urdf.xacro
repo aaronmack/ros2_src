@@ -33,7 +33,7 @@
         <child link="camera" />
         <origin xyz="${camera_x} ${camera_y} ${camera_z}" />
     </joint>
-    
+    <!-- https://github.com/gazebosim/gazebo-classic/issues/2732 -->
     <gazebo reference="camera2base_link">
         <disableFixedJointLumping>true</disableFixedJointLumping> 
         <preserveFixedJoint>true</preserveFixedJoint>

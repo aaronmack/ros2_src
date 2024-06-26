@@ -58,6 +58,7 @@ https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Launch/Launch-system.html
 
 
 `ros2 topic list`
+`ros2 topic echo <topic_name>`
 `ros2 param list`
 `ros2 daemon status`
 `ros2 interface show turtlesim/msg/Pose`
