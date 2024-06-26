@@ -1,0 +1,23 @@
+<launch>
+    <!-- 启动 turtle_teleop_key -->
+    <node name="turtle_teleop_key" pkg="turtlesim" exec="turtle_teleop_key" output="screen" />
+
+    <!-- 启动 turtlesim_node -->
+    <node name="turtlesim_node" pkg="turtlesim" exec="turtlesim_node" output="screen" />
+
+    <!-- 启动 eturtlesflow_spawn -->
+    <node name="eturtlesflow_spawn" pkg="eturtlesflow" exec="eturtlesflow_spawn" output="screen" />
+
+    <!-- 启动 eturtlesflow_pub，参数为 turtle1 -->
+    <node name="eturtlesflow_pub_turtle1" pkg="eturtlesflow" exec="eturtlesflow_pub" output="screen">
+        <param name="turtle_name" value="turtle1" />
+    </node>
+
+    <!-- 启动 eturtlesflow_pub，参数为 turtle2 -->
+    <node name="eturtlesflow_pub_turtle2" pkg="eturtlesflow" exec="eturtlesflow_pub" output="screen">
+        <param name="turtle_name" value="turtle2" />
+    </node>
+
+    <!-- 启动 eturtlesflow_solve -->
+    <node name="eturtlesflow_solve" pkg="eturtlesflow" exec="eturtlesflow_solve" output="screen" />
+</launch>

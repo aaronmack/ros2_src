@@ -1,0 +1,581 @@
+<sdf version='1.11'>
+  <model name='my_car'>
+    <link name='base_footprint'>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>0</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0</iyy>
+          <iyz>0</iyz>
+          <izz>0</izz>
+        </inertia>
+      </inertial>
+      <visual name='base_footprint_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.001</radius>
+          </sphere>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='base_link2base_footprint' type='fixed'>
+      <pose relative_to='base_footprint'>0 0 0.055 0 0 0</pose>
+      <parent>base_footprint</parent>
+      <child>base_link</child>
+      <axis>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.20000000000000001</erp>
+          </limit>
+        </ode>
+      </physics>
+    </joint>
+    <link name='base_link'>
+      <pose relative_to='base_link2base_footprint'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.001516666666666667</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.001516666666666667</iyy>
+          <iyz>0</iyz>
+          <izz>0.0025000000000000001</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_link_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.080000000000000002</length>
+            <radius>0.10000000000000001</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='base_link_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.080000000000000002</length>
+            <radius>0.10000000000000001</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Yellow</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+          <diffuse>0.625 0.37500003 0 0.5</diffuse>
+          <ambient>0.625 0.37500003 0 0.5</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='back_wheel2base_link' type='revolute'>
+      <pose relative_to='base_link'>-0.092499999999999999 0 -0.047500000000000001 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>back_wheel</child>
+      <axis>
+        <xyz>1 1 1</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='back_wheel'>
+      <pose relative_to='back_wheel2base_link'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.029999999999999999</mass>
+        <inertia>
+          <ixx>6.75e-07</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>6.75e-07</iyy>
+          <iyz>0</iyz>
+          <izz>6.75e-07</izz>
+        </inertia>
+      </inertial>
+      <collision name='back_wheel_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.0074999999999999997</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='back_wheel_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.0074999999999999997</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+          <diffuse>0 0 0 1</diffuse>
+          <ambient>0 0 0 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='camera2base_link' type='fixed'>
+      <pose relative_to='base_link'>0.080000000000000002 0 0.052499999999999998 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>camera</child>
+      <axis>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.20000000000000001</erp>
+          </limit>
+        </ode>
+      </physics>
+    </joint>
+    <link name='camera'>
+      <pose relative_to='camera2base_link'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>6.0416666666666678e-07</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>6.0416666666666678e-07</iyy>
+          <iyz>0</iyz>
+          <izz>1.0416666666666669e-06</izz>
+        </inertia>
+      </inertial>
+      <collision name='camera_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.01 0.025000000000000001 0.025000000000000001</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='camera_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.01 0.025000000000000001 0.025000000000000001</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Blue</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+          <diffuse>0 0 0 1</diffuse>
+          <ambient>0 0 0 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='front_wheel2base_link' type='revolute'>
+      <pose relative_to='base_link'>0.092499999999999999 0 -0.047500000000000001 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>front_wheel</child>
+      <axis>
+        <xyz>1 1 1</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='front_wheel'>
+      <pose relative_to='front_wheel2base_link'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.029999999999999999</mass>
+        <inertia>
+          <ixx>6.75e-07</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>6.75e-07</iyy>
+          <iyz>0</iyz>
+          <izz>6.75e-07</izz>
+        </inertia>
+      </inertial>
+      <collision name='front_wheel_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.0074999999999999997</radius>
+          </sphere>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='front_wheel_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.0074999999999999997</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+          <diffuse>0 0 0 1</diffuse>
+          <ambient>0 0 0 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='left_wheel2base_link' type='revolute'>
+      <pose relative_to='base_link'>0 0.10000000000000001 -0.022499999999999999 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>left_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='left_wheel'>
+      <pose relative_to='left_wheel2base_link'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.050000000000000003</mass>
+        <inertia>
+          <ixx>1.4140625e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1.4140625e-05</iyy>
+          <iyz>0</iyz>
+          <izz>2.6406250000000001e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name='left_wheel_collision'>
+        <pose>0 0 0 1.5707963000000003 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.014999999999999999</length>
+            <radius>0.032500000000000001</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='left_wheel_visual'>
+        <pose>0 0 0 1.5707963000000003 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.014999999999999999</length>
+            <radius>0.032500000000000001</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+          <diffuse>0 0 0 1</diffuse>
+          <ambient>0 0 0 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='right_wheel2base_link' type='revolute'>
+      <pose relative_to='base_link'>0 -0.10000000000000001 -0.022499999999999999 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>right_wheel</child>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+    <link name='right_wheel'>
+      <pose relative_to='right_wheel2base_link'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.050000000000000003</mass>
+        <inertia>
+          <ixx>1.4140625e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>1.4140625e-05</iyy>
+          <iyz>0</iyz>
+          <izz>2.6406250000000001e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name='right_wheel_collision'>
+        <pose>0 0 0 1.5707963000000003 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.014999999999999999</length>
+            <radius>0.032500000000000001</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='right_wheel_visual'>
+        <pose>0 0 0 1.5707963000000003 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.014999999999999999</length>
+            <radius>0.032500000000000001</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Red</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+          <diffuse>0 0 0 1</diffuse>
+          <ambient>0 0 0 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='support2base_link' type='fixed'>
+      <pose relative_to='base_link'>0 0 0.115 0 0 0</pose>
+      <parent>base_link</parent>
+      <child>support</child>
+      <axis>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.20000000000000001</erp>
+          </limit>
+        </ode>
+      </physics>
+    </joint>
+    <link name='support'>
+      <pose relative_to='support2base_link'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.02</mass>
+        <inertia>
+          <ixx>3.8000000000000002e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>3.8000000000000002e-05</iyy>
+          <iyz>0</iyz>
+          <izz>9.9999999999999995e-07</izz>
+        </inertia>
+      </inertial>
+      <collision name='support_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.14999999999999999</length>
+            <radius>0.01</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='support_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.14999999999999999</length>
+            <radius>0.01</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/White</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+          <diffuse>1 0.25 0 0.800000012</diffuse>
+          <ambient>1 0.25 0 0.800000012</ambient>
+        </material>
+      </visual>
+    </link>
+    <joint name='laser2support' type='fixed'>
+      <pose relative_to='support'>0 0 0.10000000000000001 0 0 0</pose>
+      <parent>support</parent>
+      <child>laser</child>
+      <axis>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-inf</lower>
+          <upper>inf</upper>
+        </limit>
+      </axis>
+      <physics>
+        <ode>
+          <limit>
+            <cfm>0</cfm>
+            <erp>0.20000000000000001</erp>
+          </limit>
+        </ode>
+      </physics>
+    </joint>
+    <link name='laser'>
+      <pose relative_to='laser2support'>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.10000000000000001</mass>
+        <inertia>
+          <ixx>4.3333333333333327e-05</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>4.3333333333333327e-05</iyy>
+          <iyz>0</iyz>
+          <izz>4.5000000000000003e-05</izz>
+        </inertia>
+      </inertial>
+      <collision name='laser_collision'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.050000000000000003</length>
+            <radius>0.029999999999999999</radius>
+          </cylinder>
+        </geometry>
+        <surface>
+          <contact>
+            <ode/>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='laser_visual'>
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <length>0.050000000000000003</length>
+            <radius>0.029999999999999999</radius>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+          <diffuse>0 0 0 1</diffuse>
+          <ambient>0 0 0 1</ambient>
+        </material>
+      </visual>
+    </link>
+    <plugin name='ignition::gazebo::systems::DiffDrive' filename='ignition-gazebo-diff-drive-system'>
+      <left_joint>left_wheel2base_link</left_joint>
+      <right_joint>right_wheel2base_link</right_joint>
+      <wheel_separation>0.2</wheel_separation>
+      <wheel_radius>0.065</wheel_radius>
+      <odom_publish_frequency>1</odom_publish_frequency>
+      <max_torque>30</max_torque>
+      <max_acceleration>1.8</max_acceleration>
+    </plugin>
+  </model>
+</sdf>

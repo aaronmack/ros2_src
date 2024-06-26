@@ -1,0 +1,20 @@
+# VSCode
+
+.vscode
+
+# Colcon Build
+build
+log
+install
+
+
+# Repositories
+wpr_simulation
+wpb_home
+urdf_tutorial
+urdf_launch
+ros2examples
+ros2-linux
+ros_gz
+ros_arduino_bridge
+gazebo_models

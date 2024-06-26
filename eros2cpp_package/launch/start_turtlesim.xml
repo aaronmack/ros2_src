@@ -1,0 +1,5 @@
+<launch>
+    <!-- <node pkg="eros2cpp_package" exec="eros2cpp_node" name="eros2cpp_hello" output="screen" /> -->
+    <node pkg="turtlesim" exec="turtlesim_node" name="t1"/>
+    <node pkg="turtlesim" exec="turtle_teleop_key" name="key1"/>
+</launch>
