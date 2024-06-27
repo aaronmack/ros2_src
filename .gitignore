@@ -10,6 +10,7 @@ install
 
 # Repositories
 wpr_simulation
+wpr_simulation2
 wpb_home
 urdf_tutorial
 urdf_launch
@@ -19,3 +20,4 @@ ros_gz
 ros_arduino_bridge
 gazebo_models
 ros2_ldlidar
+ros2_control_demos

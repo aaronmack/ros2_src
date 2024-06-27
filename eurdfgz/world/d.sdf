@@ -218,23 +218,24 @@
       </include>
 
       <plugin
-        filename="ignition-gazebo-joint-state-publisher-system"
+        filename="gz-sim-joint-state-publisher-system"
         name="ignition::gazebo::systems::JointStatePublisher">
         <!-- <joint_name>my_car/camera</joint_name> -->
       </plugin>
 
       <plugin
-        filename="ignition-gazebo-pose-publisher-system"
+        filename="gz-sim-pose-publisher-system"
         name="ignition::gazebo::systems::PosePublisher">
         <publish_link_pose>true</publish_link_pose>
         <use_pose_vector_msg>true</use_pose_vector_msg>
         <static_publisher>true</static_publisher>
         <static_update_frequency>1</static_update_frequency>
+        <update_frequency>1</update_frequency>
       </plugin>
 
       <!-- https://gazebosim.org/api/sim/8/classgz_1_1sim_1_1systems_1_1OdometryPublisher.html -->
       <plugin
-        filename="ignition-gazebo-odometry-publisher-system"
+        filename="gz-sim-odometry-publisher-system"
         name="ignition::gazebo::systems::OdometryPublisher">
         <odom_frame>my_car/odom</odom_frame>
         <robot_base_frame>my_car</robot_base_frame>

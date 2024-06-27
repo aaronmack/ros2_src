@@ -44,51 +44,6 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        back_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        base_footprint:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        laser:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_wheel:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        support:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Mass Properties:
         Inertia: false
         Mass: false
@@ -122,20 +77,6 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        back_wheel:
-          Value: true
-        base_footprint:
-          Value: true
-        base_link:
-          Value: true
-        camera:
-          Value: true
-        front_wheel:
-          Value: true
-        laser:
-          Value: true
-        left_wheel:
-          Value: true
         my_car:
           Value: true
         my_car/back_wheel:
@@ -157,10 +98,6 @@ Visualization Manager:
         my_car/right_wheel:
           Value: true
         my_car/support:
-          Value: true
-        right_wheel:
-          Value: true
-        support:
           Value: true
       Marker Scale: 1
       Name: TF

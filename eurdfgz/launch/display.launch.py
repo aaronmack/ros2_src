@@ -14,7 +14,10 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     ld = LaunchDescription()
     eurdfgz = get_package_share_directory('eurdfgz')
+    gui_arg = DeclareLaunchArgument(name='gui', default_value='true', choices=['true', 'false'],
+                                    description='Flag to enable joint_state_publisher_gui')
     
+    # ==========================
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')  # In the /opt/ros/jazzy/...
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -24,36 +27,47 @@ def generate_launch_description():
             }.items(),
     )
 
-    gui_arg = DeclareLaunchArgument(name='gui', default_value='true', choices=['true', 'false'],
-                                    description='Flag to enable joint_state_publisher_gui')
-    
-    eurdfgz_path = FindPackageShare('eurdfgz')
-    rviz_config_path = PathJoinSubstitution([eurdfgz_path, 'rviz', 'u.rviz'])
-    rviz_arg = DeclareLaunchArgument(name='rvizconfig', default_value=rviz_config_path,
-                                     description='Absolute path to rviz config file')
-
-    model_path = PathJoinSubstitution(['urdf', 'my_car.urdf'])
-    model_arg = DeclareLaunchArgument(name='model', default_value=model_path,
-                                        description='Path to robot urdf file relative to urdf_tutorial package')
-    
-    print("eurdfgz path1: ", eurdfgz)
-    print("eurdfgz path2: ", eurdfgz_path)
-    rviz = IncludeLaunchDescription(
-        PathJoinSubstitution([FindPackageShare('urdf_launch'), 'launch', 'display.launch.py']),
-        launch_arguments={
-            'urdf_package': 'eurdfgz',
-            'urdf_package_path': LaunchConfiguration('model'),
-            'rviz_config': LaunchConfiguration('rvizconfig'),
-            'jsp_gui': LaunchConfiguration('gui')}.items()
+    # ==========================
+    jsp = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        condition=IfCondition(LaunchConfiguration('gui'))
     )
 
-    # rviz = Node(
-    #     package='rviz2',
-    #     executable='rviz2',
-    #     arguments=['-d', os.path.join(eurdfgz, 'rviz', 'urdf.rviz')],
-    #     condition=IfCondition(LaunchConfiguration('gui'))
-    # )
+    jsp_gui = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
+        condition=IfCondition(LaunchConfiguration('gui'))
+    )
 
+    # ==========================
+    sdf_file = os.path.join(eurdfgz, 'urdf', 'my_car.urdf')
+    assert os.path.exists(sdf_file)
+    with open(sdf_file, 'r') as infp:
+        robot_desc = infp.read()
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='both',
+        parameters=[
+            {'use_sim_time': True},
+            {'robot_description': robot_desc},
+        ]
+    )
+
+    # ==========================
+    rviz_file = os.path.join(eurdfgz, 'rviz', 'u.rviz')
+    assert os.path.join(rviz_file)
+    rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        output='screen',
+        arguments=['-d', rviz_file],
+        condition=IfCondition(LaunchConfiguration('gui'))
+    )
+
+    # ==========================
     # https://gazebosim.org/docs/harmonic/ros2_integration
     # https://github.com/gazebosim/ros_gz/blob/ros2/ros_gz_bridge/README.md
     gz_topic = '/model/my_car'
@@ -74,7 +88,7 @@ def generate_launch_description():
             gz_topic + '/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
             gz_topic + '/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
             # Sensor Lidar (Gazebo -> ROS2)
-            'lidar@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
+            '/lidar@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan',
             '/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked'
         ],
         remappings=[
@@ -82,25 +96,17 @@ def generate_launch_description():
             (link_pose_gz_topic, '/tf'),
             (link_pose_gz_topic + '_static', '/tf_static'),
         ],
-        parameters=[{'qos_overrides./tf_static.publisher.durability': 'transient_local'}],
+        parameters=[{'qos_overrides./tf_static.publisher.durability': 'transient_local'},
+                    {'qos_overrides./model/my_car.subscriber.reliability': 'reliable'}],
         output='screen'
     )
 
-    # Bridge
-    # bridge = Node(
-    #     package='ros_gz_bridge',
-    #     executable='parameter_bridge',
-    #     arguments=['/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
-    #                '/model/my_car/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
-    #                '/model/my_car/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry'],
-    #     parameters=[{'qos_overrides./model/my_car.subscriber.reliability': 'reliable'}],
-    #     output='screen'
-    # )
-
+    # ==========================
     ld.add_action(gz_sim)
     ld.add_action(gui_arg)
-    ld.add_action(rviz_arg)
-    ld.add_action(model_arg)
+    # ld.add_action(jsp)
+    # ld.add_action(jsp_gui)
+    ld.add_action(robot_state_publisher)
     ld.add_action(bridge)
     ld.add_action(rviz)
 
